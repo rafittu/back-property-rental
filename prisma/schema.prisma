@@ -1,11 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+enum PropertyType {
+  HOUSE
+  APARTMENT
+}
+
+model Property {
+  id       String @id @unique @default(uuid()) @db.VarChar(36)
+  title    String @db.VarChar(250)
+  address  String @db.VarChar(250)
+  city     String @db.VarChar(250)
+  state    String @db.VarChar(100)
+  zip_code String @db.VarChar(8)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt()
+
+  PropertyDetails PropertyDetails[]
+  PropertyValue   PropertyValue[]
+
+  @@map("property")
+}
+
+model PropertyDetails {
+  id            String       @id @unique @default(uuid()) @db.VarChar(36)
+  property_id   String
+  bedrooms      Int
+  garage_spaces Int
+  swimming_pool Boolean
+  size          Int
+  type          PropertyType
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt()
+
+  propertyId Property @relation(fields: [property_id], references: [id])
+
+  @@map("property_details")
+}
+
+model PropertyValue {
+  id            String @id @unique @default(uuid()) @db.VarChar(36)
+  property_id   String
+  rental_amount Float
+  condo_fee     Float
+  property_tax  Float
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt()
+
+  propertyId Property @relation(fields: [property_id], references: [id])
+
+  @@map("property_value")
 }
