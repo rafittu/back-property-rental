@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseFilters,
 } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
@@ -15,7 +16,10 @@ import { FindPropertyByFilterService } from './services/find-property-by-filter.
 import { UpdatePropertyService } from './services/update-property.service';
 import { DeletePropertyService } from './services/delete-property.service';
 import { PropertyForRental } from './interfaces/property.interface';
+import { HttpExceptionFilter } from 'src/common/filter/http-exception.filter';
+import { AppError } from 'src/common/errors/Error';
 
+@UseFilters(new HttpExceptionFilter(new AppError()))
 @Controller('property')
 export class PropertyController {
   constructor(
