@@ -25,9 +25,9 @@ export class PropertyController {
     private readonly deleteProperty: DeletePropertyService,
   ) {}
 
-  @Post()
+  @Post('/create')
   create(@Body() createPropertyDto: CreatePropertyDto) {
-    return this.createProperty.execute();
+    return this.createProperty.execute(createPropertyDto);
   }
 
   @Get()
