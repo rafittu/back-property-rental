@@ -20,3 +20,15 @@ export interface PropertyForRental {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface PropertyFilter {
+  id?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  garageSpaces?: number;
+  swimmingPool?: boolean;
+  type?: PropertyType;
+}
