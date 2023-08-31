@@ -96,4 +96,34 @@ export class PropertyRepository implements IPropertyRepository {
       );
     }
   }
+
+  async findAllProperties() {
+    try {
+      const properties = await this.prisma.property.findMany({
+        select: {
+          id: true,
+          title: true,
+          address: true,
+          city: true,
+          state: true,
+          zip_code: true,
+          created_at: true,
+          PropertyDetails: true,
+          PropertyValue: true,
+        },
+      });
+
+      const response = properties.map((property) => {
+        return this.formatPropertyResponse(property);
+      });
+
+      return response;
+    } catch (error) {
+      throw new AppError(
+        'property-repository.findAllProperties',
+        500,
+        'failed to get properties',
+      );
+    }
+  }
 }

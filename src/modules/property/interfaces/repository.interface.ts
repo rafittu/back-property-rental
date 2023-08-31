@@ -5,4 +5,5 @@ export interface IPropertyRepository {
   createPropertyRental(
     createPropertyDto: CreatePropertyDto,
   ): Promise<PropertyForRental>;
+  findAllProperties();
 }
