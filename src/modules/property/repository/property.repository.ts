@@ -63,7 +63,9 @@ export class PropertyRepository implements IPropertyRepository {
     };
   }
 
-  async createPropertyRental(createPropertyDto: CreatePropertyDto) {
+  async createPropertyRental(
+    createPropertyDto: CreatePropertyDto,
+  ): Promise<PropertyForRental> {
     try {
       const formatedProperty = this.formatProperty(createPropertyDto);
 

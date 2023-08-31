@@ -14,6 +14,7 @@ import { FindAllPropertiesService } from './services/find-all-properties.service
 import { FindPropertyByFilterService } from './services/find-property-by-filter.service';
 import { UpdatePropertyService } from './services/update-property.service';
 import { DeletePropertyService } from './services/delete-property.service';
+import { PropertyForRental } from './interfaces/property.interface';
 
 @Controller('property')
 export class PropertyController {
@@ -26,7 +27,9 @@ export class PropertyController {
   ) {}
 
   @Post('/create')
-  create(@Body() createPropertyDto: CreatePropertyDto) {
+  create(
+    @Body() createPropertyDto: CreatePropertyDto,
+  ): Promise<PropertyForRental> {
     return this.createProperty.execute(createPropertyDto);
   }
 
