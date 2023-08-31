@@ -29,24 +29,24 @@ export class CreatePropertyDto {
   zipCode: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  bedrooms: number;
+  @IsString()
+  bedrooms: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  bathrooms: number;
+  @IsString()
+  bathrooms: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  garageSpaces: number;
+  @IsString()
+  garageSpaces: string;
 
   @IsNotEmpty()
   @IsBoolean()
   swimmingPool: boolean;
 
   @IsNotEmpty()
-  @IsNumber()
-  size: number;
+  @IsString()
+  size: string;
 
   @IsNotEmpty()
   @IsEnum(PropertyType)

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseFilters,
+  Query,
 } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
@@ -15,7 +16,10 @@ import { FindAllPropertiesService } from './services/find-all-properties.service
 import { FindPropertyByFilterService } from './services/find-property-by-filter.service';
 import { UpdatePropertyService } from './services/update-property.service';
 import { DeletePropertyService } from './services/delete-property.service';
-import { PropertyForRental } from './interfaces/property.interface';
+import {
+  PropertyFilter,
+  PropertyForRental,
+} from './interfaces/property.interface';
 import { HttpExceptionFilter } from 'src/common/filter/http-exception.filter';
 import { AppError } from 'src/common/errors/Error';
 
@@ -37,14 +41,14 @@ export class PropertyController {
     return this.createProperty.execute(createPropertyDto);
   }
 
-  @Get()
-  findAll() {
+  @Get('/all')
+  findAll(): Promise<PropertyForRental[]> {
     return this.findAllProperties.execute();
   }
 
-  @Get(':id')
-  findByFilter(@Param('id') id: string) {
-    return this.findPropertyByFilter.execute();
+  @Get('/filter')
+  findByFilter(@Query() filter: PropertyFilter): Promise<PropertyForRental[]> {
+    return this.findPropertyByFilter.execute(filter);
   }
 
   @Patch(':id')

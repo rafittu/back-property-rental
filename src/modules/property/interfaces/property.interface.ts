@@ -7,11 +7,11 @@ export interface PropertyForRental {
   city: string;
   state: string;
   zipCode: string;
-  bedrooms: number;
-  bathrooms: number;
-  garageSpaces: number;
+  bedrooms: string;
+  bathrooms: string;
+  garageSpaces: string;
   swimmingPool: boolean;
-  size: number;
+  size: string;
   type: PropertyType;
   rentalAmount: number;
   condoFee: number;
@@ -19,4 +19,16 @@ export interface PropertyForRental {
   description: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface PropertyFilter {
+  id?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  bedrooms?: string;
+  bathrooms?: string;
+  garageSpaces?: string;
+  swimmingPool?: boolean;
+  type?: PropertyType;
 }

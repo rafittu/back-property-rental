@@ -4,7 +4,10 @@ import { PrismaService } from '../../../prisma.service';
 import { AppError } from '../../../common/errors/Error';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { Prisma, Property } from '@prisma/client';
-import { PropertyForRental } from '../interfaces/property.interface';
+import {
+  PropertyFilter,
+  PropertyForRental,
+} from '../interfaces/property.interface';
 
 @Injectable()
 export class PropertyRepository implements IPropertyRepository {
@@ -88,7 +91,6 @@ export class PropertyRepository implements IPropertyRepository {
 
       return propertyResponse;
     } catch (error) {
-      console.log(error);
       throw new AppError(
         'property-repository.createPropertyRental',
         500,
@@ -97,7 +99,7 @@ export class PropertyRepository implements IPropertyRepository {
     }
   }
 
-  async findAllProperties() {
+  async findAllProperties(): Promise<PropertyForRental[]> {
     try {
       const properties = await this.prisma.property.findMany({
         select: {
@@ -121,6 +123,72 @@ export class PropertyRepository implements IPropertyRepository {
     } catch (error) {
       throw new AppError(
         'property-repository.findAllProperties',
+        500,
+        'failed to get properties',
+      );
+    }
+  }
+
+  async findByFilter(filter: PropertyFilter): Promise<PropertyForRental[]> {
+    const {
+      id,
+      city,
+      state,
+      zipCode,
+      bedrooms,
+      bathrooms,
+      garageSpaces,
+      swimmingPool,
+      type,
+    } = filter;
+
+    try {
+      const propertyQuery: Prisma.PropertyWhereInput = {};
+
+      id ? (propertyQuery.id = id) : propertyQuery;
+
+      city ? (propertyQuery.city = city) : propertyQuery;
+
+      state ? (propertyQuery.state = state) : propertyQuery;
+
+      zipCode ? (propertyQuery.zip_code = zipCode) : propertyQuery;
+
+      if (bedrooms || bathrooms || garageSpaces || swimmingPool || type) {
+        propertyQuery.PropertyDetails = {
+          some: {
+            ...(bedrooms && { bedrooms }),
+            ...(bathrooms && { bathrooms }),
+            ...(garageSpaces && { garage_spaces: garageSpaces }),
+            ...(swimmingPool !== undefined && { swimming_pool: swimmingPool }),
+            ...(type && { type }),
+          },
+        };
+      }
+
+      const properties = await this.prisma.property.findMany({
+        where: propertyQuery,
+        select: {
+          id: true,
+          title: true,
+          address: true,
+          city: true,
+          state: true,
+          zip_code: true,
+          created_at: true,
+          PropertyDetails: true,
+          PropertyValue: true,
+        },
+      });
+
+      const response = properties.map((property) => {
+        return this.formatPropertyResponse(property);
+      });
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw new AppError(
+        'property-repository.findByFilter',
         500,
         'failed to get properties',
       );
