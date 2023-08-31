@@ -51,12 +51,12 @@ export class PropertyController {
     return this.findPropertyByFilter.execute(filter);
   }
 
-  @Patch(':id')
+  @Patch('/update/:id')
   update(
     @Param('id') id: string,
     @Body() updatePropertyDto: UpdatePropertyDto,
   ) {
-    return this.updateProperty.execute();
+    return this.updateProperty.execute(id, updatePropertyDto);
   }
 
   @Delete(':id')

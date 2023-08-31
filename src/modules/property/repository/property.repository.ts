@@ -8,6 +8,7 @@ import {
   PropertyFilter,
   PropertyForRental,
 } from '../interfaces/property.interface';
+import { UpdatePropertyDto } from '../dto/update-property.dto';
 
 @Injectable()
 export class PropertyRepository implements IPropertyRepository {
@@ -186,11 +187,110 @@ export class PropertyRepository implements IPropertyRepository {
 
       return response;
     } catch (error) {
-      console.log(error);
       throw new AppError(
         'property-repository.findByFilter',
         500,
         'failed to get properties',
+      );
+    }
+  }
+
+  async updateProperty(
+    id: string,
+    updatePropertyDto: UpdatePropertyDto,
+  ): Promise<PropertyForRental> {
+    const {
+      title,
+      address,
+      city,
+      state,
+      zipCode,
+      bedrooms,
+      bathrooms,
+      garageSpaces,
+      swimmingPool,
+      size,
+      type,
+      rentalAmount,
+      condoFee,
+      propertyTax,
+      description,
+    } = updatePropertyDto;
+
+    try {
+      const propertyToUpdate = await this.prisma.property.findFirst({
+        where: { id },
+        select: {
+          id: true,
+          title: true,
+          address: true,
+          city: true,
+          state: true,
+          zip_code: true,
+          created_at: true,
+          PropertyDetails: true,
+          PropertyValue: true,
+        },
+      });
+
+      const property = await this.prisma.property.update({
+        where: {
+          id,
+        },
+        data: {
+          title,
+          address,
+          city,
+          state,
+          zip_code: zipCode,
+
+          PropertyDetails: {
+            update: {
+              where: { id: propertyToUpdate.PropertyDetails[0].id },
+              data: {
+                bedrooms,
+                bathrooms,
+                garage_spaces: garageSpaces,
+                swimming_pool: swimmingPool,
+                size,
+                type,
+                description,
+              },
+            },
+          },
+
+          PropertyValue: {
+            update: {
+              where: { id: propertyToUpdate.PropertyValue[0].id },
+              data: {
+                rental_amount: rentalAmount,
+                condo_fee: condoFee,
+                property_tax: propertyTax,
+              },
+            },
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          address: true,
+          city: true,
+          state: true,
+          zip_code: true,
+          created_at: true,
+          PropertyDetails: true,
+          PropertyValue: true,
+        },
+      });
+
+      const propertyResponse = this.formatPropertyResponse(property);
+
+      return propertyResponse;
+    } catch (error) {
+      throw new AppError(
+        'property-repository.updateProperty',
+        500,
+        'failed to update properties',
       );
     }
   }

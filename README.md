@@ -24,7 +24,7 @@ Este projeto utiliza as seguintes tecnologias:
    - [x] Criar imóvel para aluguel
    - [x] Buscar todos os imóveis
    - [x] Buscar imóveis por filtro
-   - [ ] Atualizar um imóvel
+   - [x] Atualizar um imóvel
    - [ ] Deletar imóvel
 
 2. Módulo de agendamento
@@ -35,7 +35,7 @@ Este projeto utiliza as seguintes tecnologias:
    - [ ] Cancelar agendamento
 
 3. Testes e documentação
-   
+
    - [ ] Testes unitários
    - [ ] Documentação Swagger
 
