@@ -6,11 +6,13 @@ import { FindPropertyByFilterService } from './services/find-property-by-filter.
 import { UpdatePropertyService } from './services/update-property.service';
 import { DeletePropertyService } from './services/delete-property.service';
 import { PrismaService } from 'src/prisma.service';
+import { PropertyRepository } from './repository/property.repository';
 
 @Module({
   controllers: [PropertyController],
   providers: [
     PrismaService,
+    PropertyRepository,
     CreatePropertyService,
     FindAllPropertiesService,
     FindPropertyByFilterService,
