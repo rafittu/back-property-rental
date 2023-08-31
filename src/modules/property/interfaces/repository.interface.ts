@@ -8,4 +8,5 @@ export interface IPropertyRepository {
   findAllProperties(): Promise<PropertyForRental[]>;
   findByFilter(filter: PropertyFilter): Promise<PropertyForRental[]>;
   updateProperty(id, updatePropertyDto): Promise<PropertyForRental>;
+  deleteProperty(id: string);
 }

@@ -25,7 +25,7 @@ Este projeto utiliza as seguintes tecnologias:
    - [x] Buscar todos os imóveis
    - [x] Buscar imóveis por filtro
    - [x] Atualizar um imóvel
-   - [ ] Deletar imóvel
+   - [x] Deletar imóvel
 
 2. Módulo de agendamento
 
@@ -38,6 +38,12 @@ Este projeto utiliza as seguintes tecnologias:
 
    - [ ] Testes unitários
    - [ ] Documentação Swagger
+
+4. Refatorar código
+
+   - [ ] Módulo de imóveis
+   - [ ] Módulo de agendamento
+   - [ ] Testes
 
 <br>
 

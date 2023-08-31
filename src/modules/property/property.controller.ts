@@ -59,8 +59,8 @@ export class PropertyController {
     return this.updateProperty.execute(id, updatePropertyDto);
   }
 
-  @Delete(':id')
+  @Delete('/delete/:id')
   remove(@Param('id') id: string) {
-    return this.deleteProperty.execute();
+    return this.deleteProperty.execute(id);
   }
 }

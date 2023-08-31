@@ -3,7 +3,7 @@ import { IPropertyRepository } from '../interfaces/repository.interface';
 import { PrismaService } from '../../../prisma.service';
 import { AppError } from '../../../common/errors/Error';
 import { CreatePropertyDto } from '../dto/create-property.dto';
-import { Prisma, Property } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import {
   PropertyFilter,
   PropertyForRental,
@@ -291,6 +291,22 @@ export class PropertyRepository implements IPropertyRepository {
         'property-repository.updateProperty',
         500,
         'failed to update properties',
+      );
+    }
+  }
+
+  async deleteProperty(id: string) {
+    try {
+      await this.prisma.property.delete({
+        where: { id },
+      });
+
+      return { message: 'property deleted' };
+    } catch (error) {
+      throw new AppError(
+        'property-repository.deleteProperty',
+        500,
+        'failed to delete properties',
       );
     }
   }
