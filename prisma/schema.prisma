@@ -32,11 +32,13 @@ model Property {
 model PropertyDetails {
   id            String       @id @unique @default(uuid()) @db.VarChar(36)
   property_id   String
-  bedrooms      Int
-  garage_spaces Int
+  bedrooms      String
+  bathrooms     String
+  garage_spaces String
   swimming_pool Boolean
-  size          Int
+  size          String
   type          PropertyType
+  description   String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt()
