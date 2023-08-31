@@ -42,12 +42,12 @@ export class PropertyController {
   }
 
   @Get('/all')
-  findAll() {
+  findAll(): Promise<PropertyForRental[]> {
     return this.findAllProperties.execute();
   }
 
   @Get('/filter')
-  findByFilter(@Query() filter: PropertyFilter) {
+  findByFilter(@Query() filter: PropertyFilter): Promise<PropertyForRental[]> {
     return this.findPropertyByFilter.execute(filter);
   }
 

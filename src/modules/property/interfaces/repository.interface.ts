@@ -6,5 +6,5 @@ export interface IPropertyRepository {
     createPropertyDto: CreatePropertyDto,
   ): Promise<PropertyForRental>;
   findAllProperties(): Promise<PropertyForRental[]>;
-  findByFilter(filter: PropertyFilter);
+  findByFilter(filter: PropertyFilter): Promise<PropertyForRental[]>;
 }

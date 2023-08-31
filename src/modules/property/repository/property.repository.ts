@@ -129,7 +129,7 @@ export class PropertyRepository implements IPropertyRepository {
     }
   }
 
-  async findByFilter(filter: PropertyFilter) {
+  async findByFilter(filter: PropertyFilter): Promise<PropertyForRental[]> {
     const {
       id,
       city,
