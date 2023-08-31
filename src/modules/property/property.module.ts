@@ -1,9 +1,21 @@
 import { Module } from '@nestjs/common';
-import { PropertyService } from './services/property.service';
 import { PropertyController } from './property.controller';
+import { CreatePropertyService } from './services/create-property.service';
+import { FindAllPropertiesService } from './services/find-all-properties.service';
+import { FindPropertyByFilterService } from './services/find-property-by-filter.service';
+import { UpdatePropertyService } from './services/update-property.service';
+import { DeletePropertyService } from './services/delete-property.service';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   controllers: [PropertyController],
-  providers: [PropertyService],
+  providers: [
+    PrismaService,
+    CreatePropertyService,
+    FindAllPropertiesService,
+    FindPropertyByFilterService,
+    UpdatePropertyService,
+    DeletePropertyService,
+  ],
 })
 export class PropertyModule {}
